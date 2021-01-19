@@ -203,7 +203,7 @@ function addRole() {
 
                 function (err) {
                     if (err) throw err
-                    consoleTable(res);
+                    console.table(res);
                     start()
                 }
             )
@@ -215,7 +215,7 @@ function findEmpDepartments() {
     connection.query("SELECT employees.first_name, employees.last_name, departments.name AS Department FROM employees JOIN roles ON employees.role_id = roles.id JOIN departments ON roles.department_id = departments.id ORDER BY employees.id;",
         function (err, res) {
             if (err) throw err
-            consoleTable(res)
+            console.table(res)
             start()
         })
 }
@@ -239,7 +239,7 @@ function addDepartment() {
 
                 function (err) {
                     if (err) throw err
-                   consoleTable(res);
+                    console.table(res);
                     start()
                 }
             )
@@ -252,7 +252,7 @@ function findManager() {
     connection.query("SELECT CONCAT(employees.first_name, ' ' ,employees.last_name) AS Managers FROM employees WHERE id in (select manager_id from employees where manager_id is not null) ORDER by employees.id",
         function (err, res) {
             if (err) throw err
-            consoleTable(res)
+            console.table(res)
             start()
         })
 }
@@ -333,7 +333,7 @@ function addEmployee() {
                 },
                 function (err) {
                     if (err) throw err;
-                    consoleTable(res)
+                    console.table(res)
                     start()
                 })
 
@@ -347,7 +347,7 @@ function updateEmployee() {
     selectEmployees();
     connection.query("SELECT employees.last_name, roles.title FROM employees JOIN roles ON employees.role_id = roles.id;", function (err, res) {
         if (err) throw err
-        consoleTable(res)
+        console.table(res)
 
         inquirer.prompt(
             [
@@ -375,7 +375,7 @@ function updateEmployee() {
                     ],
                     function (err) {
                         if (err) throw err
-                        consoleTable(res)
+                        console.table(res)
                         start()
                     })
 
