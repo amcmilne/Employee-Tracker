@@ -1,9 +1,9 @@
 //DEPENDENCIES//
-var mysql = require("mysql");
+var connection = require("./connection.js");
 var inquirer = require("inquirer");
 var consoleTable = require("console.table");
 
-//*********************************************************CONSTRUCTOR*******************************************************************//
+//*********************************************************CONSTRUCTOR***************************************************//
 const entryChoices = [
     "View all Employees",
     "View all Employees by Role",
@@ -13,17 +13,8 @@ const entryChoices = [
     "View Managers",
     "Add Employee",
     "Update Employee",
+    "Exit",
 ];
-
-//*****************************************************START CONNECTION******************************************************************//
-var connection = mysql.createConnection({
-    host: "localhost",
-    port: 3306,
-    user: "webapi",
-    password: "password123",
-    database: "employeetracker_db"
-});
-
 
 //**************************************************RETRIEVE ROLE********************************************************//
 var roleDictionary = [];
@@ -38,7 +29,7 @@ function selectRole() {
     }
     )
 }
-//**************************************************RETRIEVE DEPT************************************************************//
+//**************************************************RETRIEVE DEPT********************************************************//
 var deptDictionary = {};
 function selectDept() {
 
@@ -52,7 +43,7 @@ function selectDept() {
     )
 }
 
-//************************************************RETRIEVE EMPLOYEES************************************************************//
+//************************************************RETRIEVE EMPLOYEES******************************************************//
 var employeesDictionary = [];
 function selectEmployees() {
     return new Promise(async function (resolve, reject) {
@@ -69,14 +60,7 @@ function selectEmployees() {
     )
 }
 
-//******************************************************CONNECTION ID**************************************************************************//
-connection.connect(function (err) {
-    if (err) throw err
-    //console.log("connected as Id" + connection.threadId)
-    //connection.end();
-});
-
-//*******************************************************PROMPT USER************************************************************************//
+//*******************************************************PROMPT USER********************************************************//
 
 function start() {
     selectDept();
@@ -116,6 +100,10 @@ function start() {
                     break;
                 case "Update Employee":
                     updateEmployee();
+                    break;
+                case "Exit":
+                    connection.end();
+                    console.log("connection closed")
                     break;
                 default:
                     break;
