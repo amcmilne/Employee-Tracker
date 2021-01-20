@@ -1,5 +1,5 @@
 //DEPENDENCIES//
-var connection = require("./connection.js");
+var connection = require("./config/connection.js");
 var inquirer = require("inquirer");
 var consoleTable = require("console.table");
 
